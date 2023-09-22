@@ -10,6 +10,6 @@ app = Flask(__name__)
 app.json_provider_class.sort_keys = False
 CORS(app)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DB_URL"]
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DB_URL"]
 
-# db = SQLAlchemy(app)
+db = SQLAlchemy(app)
