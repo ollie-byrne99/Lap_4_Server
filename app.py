@@ -1,5 +1,5 @@
 from application import app
-from application.locations import routes
+from application import routes
 
 
 
