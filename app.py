@@ -1,5 +1,5 @@
 from application import app
-from application import routes
+from application import router
 
 
 
