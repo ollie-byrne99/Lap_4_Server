@@ -10,6 +10,7 @@ flask-sqlalchemy = "*"
 python-dotenv = "*"
 psycopg2 = "*"
 uvicorn = "*"
+waitress = "*"
 
 [dev-packages]
 pytest = "*"
