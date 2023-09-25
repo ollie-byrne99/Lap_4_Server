@@ -3,9 +3,7 @@ from werkzeug import exceptions
 from application import app
 from application.recipes.controllers import index_recipe, create_recipe, show_recipe, update_recipe, destroy_recipe
 from application.comments.controllers import index_comment, create_comment, show_comment, update_comment, destroy_comment
-from application.users.controllers import show_user, create_user
-from application.tokens.controllers import index_token
-
+from application.users.controllers import register_user, show_user, update_user, destroy_user
 
 @app.route("/")
 def hello_world():
@@ -57,24 +55,23 @@ def handle_comment(id):
         return destroy_comment(id)
     
 
-@app.route("/users", methods=["POST"])
-def handle_users():
+@app.route("/register", methods=["POST"])
+def handle_register():
     if request.method == "POST":
-        return create_user()
+        return register_user()
         
 
-@app.route("/users/<int:id>", methods=["GET"])
+@app.route("/users/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def handle_user(id):
     if request.method == "GET":
         return show_user(id)
     
-
-@app.route("/tokens", methods=["GET"])
-def handle_tokens():
-    if request.method == "GET":
-        return index_token()
-
-
+    if request.method == "PATCH":
+        return update_user(id)
+    
+    if request.method == "DELETE":
+        return destroy_user(id)
+    
 
 @app.errorhandler(exceptions.NotFound)
 def handle_404(err):
