@@ -25,6 +25,7 @@ entry2 = Recipe(
 
 first_user = User(
     username="test_username",
+    email="John@example.com",
     password="test_password"
 )
 

@@ -20,7 +20,7 @@ def create_user():
     try:
         data = request.json
         attributes = [
-            "username","password"
+            "username", "email", "password"
         ]
 
         extracted_data = {attr: data.get(attr) for attr in attributes}
