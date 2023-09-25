@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import jsonify, request
 from .. import db
 
-def index():
+def index_recipe():
     try:
         recipes = Recipe.query.all()
         data = [r.json for r in recipes]
@@ -14,7 +14,7 @@ def index():
         raise exceptions.InternalServerError("We are working on it")
     
 
-def create():
+def create_recipe():
     try:
         data = request.json
         attributes = [
@@ -33,7 +33,7 @@ def create():
     except:
         raise exceptions.InternalServerError("We cannot process your request.")
     
-def show(id):
+def show_recipe(id):
     try:
         recipe = Recipe.query.filter_by(id=id).first()
         return jsonify({"data": recipe.json}), 200
@@ -42,7 +42,7 @@ def show(id):
         raise exceptions.NotFound("You get it")
     
 
-def update(id):
+def update_recipe(id):
     data = request.json
     recipe = Recipe.query.filter_by(id=id).first()
 
@@ -55,7 +55,7 @@ def update(id):
     return jsonify({ "data": recipe.json })
 
 
-def destroy(id):
+def destroy_recipe(id):
     recipe = Recipe.query.filter_by(id=id).first()
     db.session.delete(recipe)
     db.session.commit()
