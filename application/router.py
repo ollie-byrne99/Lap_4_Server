@@ -1,8 +1,11 @@
 from flask import jsonify, request
 from werkzeug import exceptions
 from application import app
-from application.recipes.controllers import index, create, show, update, destroy
-from application.comments.controllers import index_c, create_c, show_c, update_c, destroy_c
+from application.recipes.controllers import index_recipe, create_recipe, show_recipe, update_recipe, destroy_recipe
+from application.comments.controllers import index_comment, create_comment, show_comment, update_comment, destroy_comment
+from application.users.controllers import show_user, create_user
+from application.tokens.controllers import index_token
+
 
 @app.route("/")
 def hello_world():
@@ -17,41 +20,60 @@ def hello_world():
 @app.route("/recipes", methods=["GET", "POST"])
 def handle_recipes():
     if request.method == "POST":
-        return create()
+        return create_recipe()
         
     if request.method == "GET":
-        return index()
+        return index_recipe()
 
 @app.route("/recipes/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def handle_recipe(id):
     if request.method == "GET":
-        return show(id)
+        return show_recipe(id)
     
     if request.method == "PATCH":
-        return update(id)
+        return update_recipe(id)
     
     if request.method == "DELETE":
-        return destroy(id)
+        return destroy_recipe(id)
     
 
 @app.route("/comments", methods=["GET", "POST"])
 def handle_comments():
     if request.method == "POST":
-        return create_c()
+        return create_comment()
         
     if request.method == "GET":
-        return index_c()
+        return index_comment()
 
 @app.route("/comments/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def handle_comment(id):
     if request.method == "GET":
-        return show_c(id)
+        return show_comment(id)
     
     if request.method == "PATCH":
-        return update_c(id)
+        return update_comment(id)
     
     if request.method == "DELETE":
-        return destroy_c(id)
+        return destroy_comment(id)
+    
+
+@app.route("/users", methods=["POST"])
+def handle_users():
+    if request.method == "POST":
+        return create_user()
+        
+
+@app.route("/users/<int:id>", methods=["GET"])
+def handle_user(id):
+    if request.method == "GET":
+        return show_user(id)
+    
+
+@app.route("/tokens", methods=["GET"])
+def handle_tokens():
+    if request.method == "GET":
+        return index_token()
+
 
 
 @app.errorhandler(exceptions.NotFound)

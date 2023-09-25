@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import jsonify, request
 from .. import db
 
-def index_c():
+def index_comment():
     try:
         comments = Comment.query.all()
         data = [c.json for c in comments]
@@ -14,11 +14,11 @@ def index_c():
         raise exceptions.InternalServerError("We are working on it")
     
 
-def create_c():
+def create_comment():
     try:
         data = request.json
         attributes = [
-            "comment", "recipe_id"
+            "comment", "recipe_id", "user_id"
         ]
 
         extracted_data = {attr: data.get(attr) for attr in attributes}
@@ -33,7 +33,7 @@ def create_c():
     except:
         raise exceptions.InternalServerError("We cannot process your request.")
     
-def show_c(id):
+def show_comment(id):
     try:
         comment = Comment.query.filter_by(id=id).first()
         return jsonify({"data": comment.json}), 200
@@ -42,7 +42,7 @@ def show_c(id):
         raise exceptions.NotFound("You get it")
     
 
-def update_c(id):
+def update_comment(id):
     data = request.json
     comment = Comment.query.filter_by(id=id).first()
 
@@ -55,7 +55,7 @@ def update_c(id):
     return jsonify({ "data": comment.json })
 
 
-def destroy_c(id):
+def destroy_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     db.session.delete(comment)
     db.session.commit()
