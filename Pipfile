@@ -11,6 +11,7 @@ python-dotenv = "*"
 psycopg2 = "*"
 uvicorn = "*"
 waitress = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 pytest = "*"
