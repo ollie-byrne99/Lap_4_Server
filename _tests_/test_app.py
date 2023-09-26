@@ -1,5 +1,7 @@
 import pytest
 from application import app, db, router
+from application.recipes import controllers
+from werkzeug import exceptions
 import json
 from dotenv import load_dotenv
 load_dotenv('.env.test')
@@ -55,17 +57,16 @@ def test_api_index_post(client):
     assert res.status_code ==201
 
 
-# def test_api_index_post_error(client):
-#     mock_data = json.dumps({
-#    "name" : "bob",
-#    "description": "juicy",
-#    "ingredients": "stuff",
-#    "user_id": 3
-# })
-#     mock_headers = {'Content-Type': 'application/json'}
-
-#     res = client.post('/recipes', data=mock_data, headers=mock_headers)
-#     assert res.status_code == 500
+def test_api_index_post_error(client):
+    mock_data = json.dumps({
+   "name" : "bob",
+   "description": "juicy",
+   "ingredients": "stuff",
+   "user_id": 1
+})
+    mock_headers = {'Content-Type': 'application/json'}
+    client.post('/recipes', data=mock_data, headers=mock_headers)
+    assert(exceptions.InternalServerError("We cannot process your requessast."))
 
 
 def test_api_get_recipe(client):
@@ -104,7 +105,5 @@ def test_api_post_comment(client):
 
     res = client.post('/comments', data=mock_data, headers=mock_headers)
     assert res.status_code ==201
-
-    
 
 
