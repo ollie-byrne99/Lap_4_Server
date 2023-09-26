@@ -12,6 +12,7 @@ psycopg2 = "*"
 uvicorn = "*"
 waitress = "*"
 flask-bcrypt = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 pytest = "*"
