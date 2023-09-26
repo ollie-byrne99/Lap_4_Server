@@ -1,10 +1,11 @@
-from .models import User
-from werkzeug import exceptions
-from flask import Flask, request, jsonify
-from .. import db
+from flask import request, jsonify
 from flask_bcrypt import Bcrypt
-from application import app
+from flask_jwt_extended import create_access_token
+from werkzeug import exceptions
 
+from .models import User
+from .. import db
+from application import app
 
 bcrypt = Bcrypt(app)
 
@@ -44,10 +45,13 @@ def login_user():
     if not bcrypt.check_password_hash(hashed_password, password):
         return jsonify({"error": "Unauthorised"}), 401
 
+    access_token = create_access_token(identity={"username": username, "email": user.email})
+
     return jsonify({
         "id": user.id,
         "username": user.username,
-        "email": user.email
+        "email": user.email,
+        "token": access_token
     })
 
 def index_user():
@@ -67,7 +71,6 @@ def show_user(id):
     except:
         raise exceptions.NotFound("You get it")
 
-
 def update_user(id):
     data = request.json
     user = User.query.filter_by(id=id).first()
@@ -78,8 +81,7 @@ def update_user(id):
 
     db.session.commit()
 
-    return jsonify({ "data": user.json })
-
+    return jsonify({"data": user.json})
 
 def destroy_user(id):
     user = User.query.filter_by(id=id).first()
