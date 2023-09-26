@@ -15,12 +15,11 @@ def register_user():
 
     user_exists = User.query.filter_by(email=email).first() is not None
 
-
     if user_exists:
         return jsonify({"error": "User Already Exists"}), 409
 
-    hashed_password = bcrypt.generate_password_hash(password)
-    new_user = User(username=username, email=email, password = hashed_password)
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8') 
+    new_user = User(username=username, email=email, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
 
@@ -28,14 +27,34 @@ def register_user():
         "id": new_user.id,
         "username": new_user.username,
         "email": new_user.email,
-        "password": new_user.password
+        "password": new_user.password 
+    })
+
+def login_user():
+    username = request.json["username"]
+    password = request.json["password"]
+
+    user = User.query.filter_by(username=username).first()
+
+    if user is None:
+        return jsonify({"error": "Unauthorised"}), 401
+
+    hashed_password = user.password
+
+    if not bcrypt.check_password_hash(hashed_password, password):
+        return jsonify({"error": "Unauthorised"}), 401
+
+    return jsonify({
+        "id": user.id,
+        "username": user.username,
+        "email": user.email
     })
 
 def index_user():
     try:
         users = User.query.all()
         data = [u.json for u in users]
-        return jsonify({"recipes": data}), 200
+        return jsonify({"users": data}), 200
         
     except:
         raise exceptions.InternalServerError("We are working on it")
