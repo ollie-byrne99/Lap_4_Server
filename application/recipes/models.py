@@ -11,6 +11,9 @@ class Recipe(db.Model):
     
     comments = db.relationship('Comment', back_populates='recipe', cascade='all, delete-orphan')
 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('User', back_populates='recipes')
+
     def __repr__(self):
         return f"Recipe(id: {self.id}, name: {self.name}, description: {self.description})"
     
@@ -19,5 +22,6 @@ class Recipe(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "description": self.description
+            "description": self.description,
+            "user_id": self.user_id
         }
