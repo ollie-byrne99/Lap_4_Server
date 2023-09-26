@@ -3,7 +3,7 @@ from werkzeug import exceptions
 from application import app
 from application.recipes.controllers import index_recipe, create_recipe, show_recipe, update_recipe, destroy_recipe
 from application.comments.controllers import index_comment, create_comment, show_comment, update_comment, destroy_comment
-from application.users.controllers import register_user, show_user, update_user, destroy_user, index_user
+from application.users.controllers import register_user, show_user, update_user, destroy_user, index_user, login_user
 
 @app.route("/")
 def hello_world():
@@ -60,6 +60,13 @@ def handle_register():
     if request.method == "POST":
         return register_user()
     
+
+@app.route("/login", methods=["POST"])
+def handle_login():
+    if request.method == "POST":
+        return login_user()
+
+
 @app.route("/users", methods=["GET"])
 def handle_users():
     if request.method == "GET":
