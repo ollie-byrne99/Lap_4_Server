@@ -1,27 +1,23 @@
 import pytest
-from application import app as application, db
-from application import router
+from application import app, db, router
+import json
+from dotenv import load_dotenv
+load_dotenv('.env.test')
+import os
 
 @pytest.fixture
-def app():
-    application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://qsvzyace:gqPw0yrmK9WaDzeC9EJaBCy5K1z2_-GV@tai.db.elephantsql.com/qsvzyace'
-    application.config['TESTING'] = True
-    with application.app_context():
-        # db.create_all()
-        print("Seeding database")
-        yield application
-       # db.drop_all()
+def client():
+    app.config['TESTING'] = True
+    #application.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DB_URL"]
+    # with application.app_context():
+    #     db.create_all()
+    with app.test_client() as client:
+        return client
+
+    # with application.app_context():
+    #     db.drop_all()
 
 
-@pytest.fixture
-def client(app): 
-    return app.test_client()
-
-def test_api_index(client):
-    res = client.get('/recipes')
-    data = res.get_json()
-    print(data)
-   
 
 def test_home(client):
     response = client.get("/")
@@ -31,10 +27,84 @@ def test_home(client):
     
     expected_data = {
         "message": "Welcome",
-        "description": "Recipes API",
+        "description": "Recipe API",
         "endpoints": ["GET /"]
     }
 
+    assert data == expected_data
     
     
+def test_api_index_get(client):
+    res = client.get('/recipes')
+    data = res.get_json()
+    expected_data = {'recipes': [{'id': 1, 'name': 'Spaghetti Carbonara', 'description': 'A creamy pasta infused with salt, pepper and pancetta', 'ingredients': '4 eggs, 500g spaghetti, 250g pancetta, 125g parmesan, 1tb salt, 1tb pepper', 'user_id': 1}, {'id': 2, 'name': 'Spaghetti Bolognese', 'description': 'Beef Mince Cooked in assorted chopped vegetables', 'ingredients': '500g beef mince, tomatos, onion, garlic, mushroom, pepper, spaghetti', 'user_id': 1}]}
+    
+    assert len(data['recipes']) > 0 
+    assert data == expected_data
+
+def test_api_index_post(client):
+    mock_data = json.dumps({
+   "name" : "bob",
+   "description": "juicy",
+   "ingredients": "stuff",
+   "user_id": 1
+})
+    mock_headers = {'Content-Type': 'application/json'}
+
+    res = client.post('/recipes', data=mock_data, headers=mock_headers)
+    assert res.status_code ==201
+
+
+# def test_api_index_post_error(client):
+#     mock_data = json.dumps({
+#    "name" : "bob",
+#    "description": "juicy",
+#    "ingredients": "stuff",
+#    "user_id": 3
+# })
+#     mock_headers = {'Content-Type': 'application/json'}
+
+#     res = client.post('/recipes', data=mock_data, headers=mock_headers)
+#     assert res.status_code == 500
+
+
+def test_api_get_recipe(client):
+    res = client.get('/recipes/1')
+    assert res.status_code == 200
+    
+
+def test_api_patch_recipe(client):
+    mock_data = json.dumps({
+   "name" : "bob",
+   "description": "very juicy",
+   "ingredients": "stuff",
+   "user_id": 1
+  })
+    mock_headers = {'Content-Type': 'application/json'}
+    res = client.patch('/recipes/1', data=mock_data, headers=mock_headers)
+    assert res.status_code == 200
+    data = res.get_json()
+    assert data['data'] == {'id': 1, 'name': 'bob', 'description': 'very juicy', 'ingredients': 'stuff', 'user_id': 1}
+
+
+def test_api_delete_recipe(client):
+    res = client.delete('/recipes/1')
+    assert res.status_code == 204
+
+def test_api_get_comment(client):
+    res = client.get('/comments')
+    assert res.status_code == 200
+
+
+def test_api_post_comment(client):
+    mock_data = json.dumps({
+    "comment" : "very nice", "recipe_id" : 2, "user_id" : 1
+})
+    mock_headers = {'Content-Type': 'application/json'}
+
+    res = client.post('/comments', data=mock_data, headers=mock_headers)
+    assert res.status_code ==201
+
+    
+
 
