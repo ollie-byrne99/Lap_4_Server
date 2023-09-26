@@ -4,6 +4,8 @@ from application import app
 from application.recipes.controllers import index_recipe, create_recipe, show_recipe, update_recipe, destroy_recipe
 from application.comments.controllers import index_comment, create_comment, show_comment, update_comment, destroy_comment
 from application.users.controllers import register_user, show_user, update_user, destroy_user, index_user, login_user
+from flask_jwt_extended import jwt_required
+
 
 @app.route("/")
 def hello_world():
@@ -18,7 +20,7 @@ def hello_world():
 @app.route("/recipes", methods=["GET", "POST"])
 def handle_recipes():
     if request.method == "POST":
-        return create_recipe()
+        return jwt_required()(create_recipe)()
         
     if request.method == "GET":
         return index_recipe()
@@ -29,16 +31,16 @@ def handle_recipe(id):
         return show_recipe(id)
     
     if request.method == "PATCH":
-        return update_recipe(id)
+        return jwt_required()(update_recipe)(id)
     
     if request.method == "DELETE":
-        return destroy_recipe(id)
+        return jwt_required()(destroy_recipe)(id)
     
 
 @app.route("/comments", methods=["GET", "POST"])
 def handle_comments():
     if request.method == "POST":
-        return create_comment()
+        return jwt_required()(create_comment)()
         
     if request.method == "GET":
         return index_comment()
@@ -49,10 +51,11 @@ def handle_comment(id):
         return show_comment(id)
     
     if request.method == "PATCH":
-        return update_comment(id)
+        
+        return jwt_required()(update_comment)(id)
     
     if request.method == "DELETE":
-        return destroy_comment(id)
+        return jwt_required()(destroy_comment)(id)
     
 
 @app.route("/register", methods=["POST"])
