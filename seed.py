@@ -23,12 +23,14 @@ db.session.commit()
 entry1 = Recipe(
     name="Spaghetti Carbonara",
     description="A creamy pasta infused with salt, pepper and pancetta",
+    ingredients="4 eggs, 500g spaghetti, 250g pancetta, 125g parmesan, 1tb salt, 1tb pepper",
     user_id=predefined_user.id
 )
 
 entry2 = Recipe(
     name="Spaghetti Bolognese",
     description="Beef Mince Cooked in assorted chopped vegetables",
+    ingredients="500g beef mince, tomatos, onion, garlic, mushroom, pepper, spaghetti",
     user_id=predefined_user.id
 )
 

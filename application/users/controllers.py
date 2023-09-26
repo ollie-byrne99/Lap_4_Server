@@ -30,6 +30,15 @@ def register_user():
         "email": new_user.email,
         "password": new_user.password
     })
+
+def index_user():
+    try:
+        users = User.query.all()
+        data = [u.json for u in users]
+        return jsonify({"recipes": data}), 200
+        
+    except:
+        raise exceptions.InternalServerError("We are working on it")
     
 def show_user(id):
     try:
