@@ -5,6 +5,8 @@ from application.recipes.controllers import index_recipe, create_recipe, show_re
 from application.comments.controllers import index_comment, create_comment, show_comment, update_comment, destroy_comment
 from application.users.controllers import register_user, show_user, update_user, destroy_user, index_user, login_user
 from application.likes.controllers import index_like, create_like, show_like, update_like, destroy_like
+from application.ingredients.controllers import index_ingredient, create_ingredient, show_ingredient, update_ingredient, destroy_ingredient
+
 from flask_jwt_extended import jwt_required
 
 
@@ -108,6 +110,26 @@ def handle_like(id):
     
     if request.method == "DELETE":
         return jwt_required()(destroy_like)(id)
+    
+
+@app.route("/ingredients", methods=["GET", "POST"])
+def handle_ingredients():
+    if request.method == "POST":
+        return jwt_required()(create_ingredient)()
+        
+    if request.method == "GET":
+        return index_ingredient()
+
+@app.route("/ingredients/<int:id>", methods=["GET", "PATCH", "DELETE"])
+def handle_ingredient(id):
+    if request.method == "GET":
+        return show_ingredient(id)
+    
+    if request.method == "PATCH":
+        return jwt_required()(update_ingredient)(id)
+    
+    if request.method == "DELETE":
+        return jwt_required()(destroy_ingredient)(id)
 
 
 @app.errorhandler(exceptions.NotFound)
