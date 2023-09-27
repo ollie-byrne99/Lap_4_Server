@@ -1,6 +1,5 @@
 from .models import Comment
 from werkzeug import exceptions
-from flask import jsonify
 from flask import jsonify, request
 from .. import db
 

@@ -2,6 +2,7 @@ from application import db
 from application.recipes.models import Recipe
 from application.comments.models import Comment
 from application.users.models import User
+from application.likes.models import Like
 
 db.drop_all()
 print("Dropping database")
@@ -46,6 +47,13 @@ comment1 = Comment(
 )
 
 
+like1 = Like(
+    recipe_id=entry1.id,
+    user_id=predefined_user.id
+)
 
-db.session.add_all([comment1])
+
+
+
+db.session.add_all([comment1, like1])
 db.session.commit()

@@ -4,6 +4,7 @@ from application import app
 from application.recipes.controllers import index_recipe, create_recipe, show_recipe, update_recipe, destroy_recipe
 from application.comments.controllers import index_comment, create_comment, show_comment, update_comment, destroy_comment
 from application.users.controllers import register_user, show_user, update_user, destroy_user, index_user, login_user
+from application.likes.controllers import index_like, create_like, show_like, update_like, destroy_like
 from flask_jwt_extended import jwt_required
 
 
@@ -87,6 +88,27 @@ def handle_user(id):
     if request.method == "DELETE":
         return destroy_user(id)
     
+
+
+@app.route("/likes", methods=["GET", "POST"])
+def handle_likes():
+    if request.method == "POST":
+        return jwt_required()(create_like)()
+        
+    if request.method == "GET":
+        return index_like()
+
+@app.route("/likes/<int:id>", methods=["GET", "PATCH", "DELETE"])
+def handle_like(id):
+    if request.method == "GET":
+        return show_like(id)
+    
+    if request.method == "PATCH":
+        return jwt_required()(update_like)(id)
+    
+    if request.method == "DELETE":
+        return jwt_required()(destroy_like)(id)
+
 
 @app.errorhandler(exceptions.NotFound)
 def handle_404(err):
