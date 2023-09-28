@@ -23,21 +23,43 @@ db.session.add_all([predefined_user])
 db.session.commit() 
 
 entry1 = Recipe(
-    name="Spaghetti Carbonara",
-    description="A creamy pasta infused with salt, pepper and pancetta",
-    ingredients="4 eggs, 500g spaghetti, 250g pancetta, 125g parmesan, 1tb salt, 1tb pepper",
+    name="Vegetable Pasta",
+    description="A light pasta dish with fresh spring vegetables.",
+    ingredients="200g pasta, 100g asparagus, 100g peas, 1 lemon, 50g parmesan",
+    season="Spring",
+    image="https://images.immediate.co.uk/production/volatile/sites/2/2021/06/OnePotPasta-47b5b0a-a302cf0.jpg?quality=90&resize=556,505",
     user_id=predefined_user.id
 )
 
 entry2 = Recipe(
-    name="Spaghetti Bolognese",
-    description="Beef Mince Cooked in assorted chopped vegetables",
-    ingredients="500g beef mince, tomatos, onion, garlic, mushroom, pepper, spaghetti",
+    name="Grilled Chicken Salad",
+    description="A refreshing salad with grilled chicken and summer fruits.",
+    ingredients="200g chicken breast, mixed salad greens, strawberries, blueberries, vinaigrette",
+    season="Summer",
+    image="https://assets.epicurious.com/photos/64a845e67799ee8651e4fb8f/16:9/w_6815,h_3833,c_limit/AshaGrilledChickenSalad_RECIPE_070523_56498.jpg",
+    user_id=predefined_user.id
+)
+
+entry3 = Recipe(
+    name="Pumpkin Soup",
+    description="A warm and creamy pumpkin soup perfect for fall.",
+    ingredients="1 pumpkin, 1 onion, 2 cloves of garlic, 500ml vegetable broth, salt, pepper",
+    season="Autumn",
+    image="https://thebigmansworld.com/wp-content/uploads/2022/10/pumpkin-curry-soup-recipe.jpg",
+    user_id=predefined_user.id
+)
+
+entry4 = Recipe(
+    name="Beef Stew",
+    description="A hearty and warming beef stew for cold winter days.",
+    ingredients="500g beef, 2 carrots, 2 potatoes, 1 onion, 500ml beef broth, salt, pepper",
+    season="Winter",
+    image="https://hips.hearstapps.com/hmg-prod/images/beef-stew-horizontal-1539197161.jpg?crop=1xw:0.9997999709048588xh;center,top&resize=1200:*",
     user_id=predefined_user.id
 )
 
 
-db.session.add_all([entry1, entry2])
+db.session.add_all([entry1, entry2, entry3, entry4])
 db.session.commit() 
 
 

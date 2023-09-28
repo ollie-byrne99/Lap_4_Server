@@ -13,7 +13,7 @@
     iii. DB_URL='postgresql://'
     iv. JWT_SECRET_KEY='x'
 
-You must input your own postrges SQL database into DB_URL. Elephant SQL for cloud storage is a good choice.
+You must input your own postgres SQL database into DB_URL. Elephant SQL for cloud storage is a good choice.
 JWT_SECRET_KEY can be set to any string. This must be kept secret.
 
 # Usage
