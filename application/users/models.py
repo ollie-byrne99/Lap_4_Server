@@ -10,6 +10,7 @@ class User(db.Model):
     
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
     recipes = db.relationship('Recipe', back_populates='user', cascade='all, delete-orphan')
+    likes = db.relationship('Like', back_populates='user', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f"User(id: {self.id}, username: {self.username}, email: {self.email})"
