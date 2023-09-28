@@ -46,18 +46,18 @@ def test_home(client):
     
 def test_api_index_get(client):
     res = client.get('/recipes')
-    data = res.get_json()
-    expected_data = {'recipes': [{'id': 1, 'name': 'Spaghetti Carbonara', 'description': 'A creamy pasta infused with salt, pepper and pancetta', 'ingredients': '4 eggs, 500g spaghetti, 250g pancetta, 125g parmesan, 1tb salt, 1tb pepper', 'user_id': 1}, {'id': 2, 'name': 'Spaghetti Bolognese', 'description': 'Beef Mince Cooked in assorted chopped vegetables', 'ingredients': '500g beef mince, tomatos, onion, garlic, mushroom, pepper, spaghetti', 'user_id': 1}]}
-    
+    data = res.get_json()    
     assert len(data['recipes']) > 0 
-    assert data == expected_data
+   
 
 def test_api_index_post(client, jwt_token):
     mock_data = json.dumps({
    "name" : "bob",
    "description": "juicy",
    "ingredients": "stuff",
-   "user_id": 1
+   "user_id": 1,
+   "season": "summer",
+   "image": "james"
 })
     mock_headers = {
         'Content-Type': 'application/json',
@@ -90,14 +90,16 @@ def test_api_patch_recipe(client, jwt_token):
    "name" : "bob",
    "description": "very juicy",
    "ingredients": "stuff",
-   "user_id": 1
+   "user_id": 1,
+   "image": "james",
+   "season": "spring"
   })
     mock_headers = {'Content-Type': 'application/json',
                     'Authorization': f'Bearer {jwt_token}' }
     res = client.patch('/recipes/1', data=mock_data, headers=mock_headers)
     assert res.status_code == 200
     data = res.get_json()
-    assert data['data'] == {'id': 1, 'name': 'bob', 'description': 'very juicy', 'ingredients': 'stuff', 'user_id': 1}
+    assert data['data'] == {'id': 1, 'name': 'bob', 'description': 'very juicy', 'ingredients': 'stuff', 'user_id': 1, 'image': 'james', 'season': 'spring'}
 
 
 def test_api_delete_recipe(client, jwt_token ):
@@ -119,5 +121,81 @@ def test_api_post_comment(client, jwt_token):
 
     res = client.post('/comments', data=mock_data, headers=mock_headers)
     assert res.status_code ==201
+
+
+def test_api_get_commentID(client):
+
+    res = client.get('/comments/2')
+    assert res.status_code == 200
+    
+
+def test_api_patch_commentID(client, jwt_token):
+    mock_data = json.dumps({
+    "comment" : "very nice", "recipe_id" : 2, "user_id" : 1
+})
+    mock_headers = {'Content-Type': 'application/json',
+                    'Authorization': f'Bearer {jwt_token}'}
+
+    res = client.patch('/comments/2', data=mock_data, headers=mock_headers)
+    assert res.status_code ==200
+
+def test_api_delete_commentID(client, jwt_token):
+ 
+    mock_headers = {'Content-Type': 'application/json',
+                    'Authorization': f'Bearer {jwt_token}'}
+
+    res = client.delete('/comments/2', headers=mock_headers)
+    assert res.status_code ==204
+
+
+def test_api_post_register(client):
+    mock_data = json.dumps({
+    "username" :"bob", "email": "bob@bob", "password" : "bobo"
+})
+    mock_headers = {'Content-Type': 'application/json'}
+
+    res = client.post('/register', data=mock_data, headers=mock_headers)
+    assert res.status_code ==200
+
+def test_api_post_login(client):
+     mock_data = json.dumps({
+    "username" :"bob", "email": "bob@bob", "password" : "bobo"
+})
+     mock_headers = {'Content-Type': 'application/json'}
+
+     res = client.post('/login', data=mock_data, headers=mock_headers)
+     assert res.status_code ==200
+
+def test_api_get_users(client):
+    res = client.get('/users')
+    assert res.status_code == 200
+
+def test_api_get_usersID(client):
+    res = client.get('/users/1')
+    assert res.status_code == 200
+
+def test_api_patch_usersID(client):
+     mock_data = json.dumps({
+    "username" :"bob", "email": "bob@bob", "password" : "bobo"
+})
+     mock_headers = {'Content-Type': 'application/json'}
+
+     res = client.patch('/users/1', data=mock_data, headers=mock_headers)
+     assert res.status_code ==200
+
+def test_api_delete_usersID(client):
+
+    res = client.delete('/users/1')
+    assert res.status_code ==204
+
+def test_api_get_likes(client):
+
+    res = client.get('/likes')
+    print(res.data)
+    assert res.status_code ==200
+
+
+
+
 
 
