@@ -9,9 +9,9 @@ class Recipe(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     ingredients = db.Column(db.String(500), nullable=False)
-    
+    season = db.Column(db.String(10), nullable=False)
     comments = db.relationship('Comment', back_populates='recipe', cascade='all, delete-orphan')
-
+    image = db.Column(db.String(500), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates='recipes')
 
@@ -19,7 +19,7 @@ class Recipe(db.Model):
 
 
     def __repr__(self):
-        return f"Recipe(id: {self.id}, name: {self.name}, description: {self.description}, ingredients: {self.ingredients})"
+        return f"Recipe(id: {self.id}, name: {self.name}, season: {self.season}, image: {self.image}, description: {self.description}, ingredients: {self.ingredients})"
     
     @property
     def json(self):
@@ -28,5 +28,7 @@ class Recipe(db.Model):
             "name": self.name,
             "description": self.description,
             "ingredients": self.ingredients,
+            "season": self.season,
+            "image": self.image,
             "user_id": self.user_id
         }
