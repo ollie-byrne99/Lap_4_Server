@@ -194,6 +194,24 @@ def test_api_get_likes(client):
     print(res.data)
     assert res.status_code ==200
 
+def test_api_post_likes(client, jwt_token):
+
+    
+    mock_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {jwt_token}'
+        }   
+
+
+    mock_data_likes = json.dumps({
+        "user_id": 2,
+        "recipe_id":3
+    })
+
+    res = client.post('/likes', data=mock_data_likes, headers=mock_headers)
+    assert res.status_code ==200
+
+
 
 
 
