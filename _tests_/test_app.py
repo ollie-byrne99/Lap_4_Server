@@ -12,7 +12,7 @@ from flask_jwt_extended import create_access_token
 def client():
     app.config['TESTING'] = True
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
-    #application.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DB_URL"]
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DB_URL"]
     # with application.app_context():
     #     db.create_all()
     with app.test_client() as client:
@@ -44,18 +44,20 @@ def test_home(client):
     assert data == expected_data
     
     
-def test_api_index_get(client):
+def test_api_recipes_get(client):
     res = client.get('/recipes')
     data = res.get_json()    
     assert len(data['recipes']) > 0 
-   
 
-def test_api_index_post(client, jwt_token):
+ 
+def test_api_recipes_post(client, jwt_token):
     mock_data = json.dumps({
    "name" : "bob",
    "description": "juicy",
    "ingredients": "stuff",
+   "instructions": "fuck you kris",
    "user_id": 1,
+   "budget" : 500,
    "season": "summer",
    "image": "james"
 })
@@ -67,8 +69,7 @@ def test_api_index_post(client, jwt_token):
     res = client.post('/recipes', data=mock_data, headers=mock_headers)
     assert res.status_code ==201
 
-
-def test_api_index_post_error(client):
+def test_api_recipes_post_error(client):
     mock_data = json.dumps({
    "name" : "bob",
    "description": "juicy",
@@ -90,6 +91,7 @@ def test_api_patch_recipe(client, jwt_token):
    "name" : "bob",
    "description": "very juicy",
    "ingredients": "stuff",
+   "budget": 300,
    "user_id": 1,
    "image": "james",
    "season": "spring"
