@@ -9,6 +9,8 @@ class Recipe(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     ingredients = db.Column(db.String(500), nullable=False)
+    instructions = db.Column(db.String(500), nullable=False)
+    budget = db.Column(db.String(10), nullable = False)
     season = db.Column(db.String(10), nullable=False)
     comments = db.relationship('Comment', back_populates='recipe', cascade='all, delete-orphan')
     image = db.Column(db.String(500), nullable=False)
@@ -28,6 +30,8 @@ class Recipe(db.Model):
             "name": self.name,
             "description": self.description,
             "ingredients": self.ingredients,
+            "instructions": self.instructions,
+            "budget": self.budget,
             "season": self.season,
             "image": self.image,
             "user_id": self.user_id
