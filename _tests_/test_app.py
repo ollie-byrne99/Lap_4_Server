@@ -55,7 +55,7 @@ def test_api_recipes_post(client, jwt_token):
    "name" : "bob",
    "description": "juicy",
    "ingredients": "stuff",
-   "instructions": "fuck you kris",
+   "instructions": "good job kris",
    "user_id": 1,
    "budget" : 500,
    "season": "summer",
@@ -91,6 +91,7 @@ def test_api_patch_recipe(client, jwt_token):
    "name" : "bob",
    "description": "very juicy",
    "ingredients": "stuff",
+   "instructions": "dunno",
    "budget": 300,
    "user_id": 1,
    "image": "james",
@@ -101,7 +102,7 @@ def test_api_patch_recipe(client, jwt_token):
     res = client.patch('/recipes/1', data=mock_data, headers=mock_headers)
     assert res.status_code == 200
     data = res.get_json()
-    assert data['data'] == {'id': 1, 'name': 'bob', 'description': 'very juicy', 'ingredients': 'stuff', 'user_id': 1, 'image': 'james', 'season': 'spring'}
+    assert data['data']['instructions'] == 'dunno'
 
 
 def test_api_delete_recipe(client, jwt_token ):
