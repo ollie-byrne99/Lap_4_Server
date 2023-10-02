@@ -204,7 +204,53 @@ entry16 = Recipe(
     user_id=predefined_user.id
 )
 
-db.session.add_all([entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9, entry10, entry11, entry12, entry13, entry14, entry15, entry16])
+
+entry17 = Recipe(
+    name="Lobster Risotto with White Truffle Oil",
+    description="A rich and creamy risotto with succulent lobster meat and aromatic truffle oil.",
+    ingredients="200g Arborio rice, 1L seafood broth, 2 lobster tails, 50ml white truffle oil, 100g Parmesan cheese, 2 tbsp olive oil, 1 onion, minced, 2 garlic cloves, minced, salt, pepper",
+    season="Spring",
+    instructions="1. Sauté onion and garlic in olive oil.\n2. Add Arborio rice and cook until translucent.\n3. Gradually add broth while stirring constantly.\n4. When rice is almost done, add cooked lobster meat.\n5. Finish with Parmesan, truffle oil, salt, and pepper.",
+    budget="£££",
+    image="https://bakeitwithlove.com/wp-content/uploads/2016/03/Lobster-Risotto-h.png",
+    user_id=predefined_user.id
+)
+
+entry18 = Recipe(
+    name="Wagyu Beef Steak with Summer Truffles",
+    description="A tender and juicy Wagyu steak topped with freshly shaved summer truffles.",
+    ingredients="1 Wagyu beef steak, salt, pepper, olive oil, 50g fresh summer truffles, butter",
+    season="Summer",
+    instructions="1. Season the Wagyu steak with salt and pepper.\n2. Heat olive oil in a pan and sear the steak.\n3. Finish with butter and let it rest.\n4. Slice and top with shaved truffles.",
+    budget="£££",
+    image="https://assets.bonappetit.com/photos/57b16bd21b33404414976871/master/w_1280%2Cc_limit/wagyu-steak.jpg",
+    user_id=predefined_user.id
+)
+
+entry19 = Recipe(
+    name="Foie Gras Ravioli with Black Truffle Sauce",
+    description="Decadent ravioli filled with smooth foie gras in a luxurious black truffle sauce.",
+    ingredients="200g fresh pasta dough, 150g foie gras, 50g black truffles, 100ml heavy cream, salt, pepper, Parmesan cheese",
+    season="Autumn",
+    instructions="1. Make ravioli filled with foie gras.\n2. Cook ravioli in boiling water.\n3. Make a sauce with cream and truffle slices.\n4. Serve ravioli with the sauce and top with truffle slices and Parmesan.",
+    budget="£££",
+    image="https://images.gestionaweb.cat/1264/pwimg-1100/r7.jpg",
+    user_id=predefined_user.id
+)
+
+entry20 = Recipe(
+    name="Champagne Poached Oysters with Caviar",
+    description="Oysters delicately poached in champagne, topped with a generous dollop of premium caviar.",
+    ingredients="12 fresh oysters, 200ml premium champagne, 50g premium caviar, lemon zest, salt, pepper, chives for garnish",
+    season="Winter",
+    instructions="1. Shuck oysters and reserve their liquid.\n2. Combine oyster liquid with champagne and heat.\n3. Gently poach oysters in the mixture.\n4. Serve oysters in their half-shell, topped with caviar, a sprinkle of lemon zest, salt, pepper, and chives.",
+    budget="£££",
+    image="https://www.markys.com/media/mgs_blog/recipies/4/Depositphotos_23992451_m-450x300.jpg",
+    user_id=predefined_user.id
+)
+
+
+db.session.add_all([entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9, entry10, entry11, entry12, entry13, entry14, entry15, entry16, entry17, entry18, entry19, entry20])
 db.session.commit() 
 
 
