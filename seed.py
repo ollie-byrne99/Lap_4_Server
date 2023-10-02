@@ -4,6 +4,10 @@ from application.comments.models import Comment
 from application.users.models import User
 from application.likes.models import Like
 from application.ingredients.models import Ingredient
+from application import app
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt(app)
 
 db.drop_all()
 print("Dropping database")
@@ -13,14 +17,16 @@ print("Creating database")
 print("Seeding database")
 
 
+hashed_password = bcrypt.generate_password_hash("jkljkl").decode('utf-8')
+
 predefined_user = User(
-    username="predefined_user",
-    email="predifined@example.com",
-    password="unhashed_password"
+    username="admin",
+    email="admin@example.com",
+    password=hashed_password
 )
 
 db.session.add_all([predefined_user])
-db.session.commit() 
+db.session.commit()
 
 entry1 = Recipe(
     name="Vegetable Pasta",
