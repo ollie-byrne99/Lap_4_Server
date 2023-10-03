@@ -16,8 +16,9 @@ def index_recipe():
 def create_recipe():
     try:
         data = request.json
+        
         attributes = [
-            "name","description", "ingredients", "instructions", "budget", "season", "image", "user_id"
+            "name","description", "ingredients", "vegetarian", "vegan", "instructions", "budget", "season", "image", "user_id"
         ]
 
         extracted_data = {attr: data.get(attr) for attr in attributes}
