@@ -188,13 +188,12 @@ def test_api_patch_usersID(client):
 
 def test_api_delete_usersID(client):
 
-    res = client.delete('/users/1')
+    res = client.delete('/users/2')
     assert res.status_code ==204
 
 def test_api_get_likes(client):
 
     res = client.get('/likes')
-    print(res.data)
     assert res.status_code ==200
 
 def test_api_post_likes(client, jwt_token):
@@ -207,15 +206,110 @@ def test_api_post_likes(client, jwt_token):
 
 
     mock_data_likes = json.dumps({
-        "user_id": 2,
+        "user_id": 1,
         "recipe_id":3
     })
 
     res = client.post('/likes', data=mock_data_likes, headers=mock_headers)
+    assert res.status_code ==201
+
+def test_api_get_like(client):
+
+    res = client.get('/likes/2')
+
     assert res.status_code ==200
 
+def test_api_patch_like(client, jwt_token):
 
+    mock_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {jwt_token}'
+        }  
+    
+    mock_data_likes = json.dumps({
+        "id": 2,
+        "recipe_id":3,
+        "user_id": 1
+    })
 
+   
+     
+    res = client.patch('/likes/2', data=mock_data_likes, headers=mock_headers)
+    parsed_data = json.loads(res.data)
+    assert res.status_code ==200
+    assert parsed_data == {'data': {'id': 2, 'user_id': 1, 'recipe_id': 3}}
+    
+    
+def test_api_delete_like(client, jwt_token):
+
+    mock_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {jwt_token}'
+        }  
+    
+    
+    res = client.delete('/likes/2', headers=mock_headers)
+    assert res.status_code ==204
+
+    
+def test_api_get_ingredients(client):
+
+    mock_headers = {
+        'Content-Type': 'application/json'
+        }  
+
+    res = client.get('/ingredients', headers=mock_headers)
+    assert res.status_code ==200
+
+def test_api_post_ingredients(client, jwt_token):
+
+    mock_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {jwt_token}'
+        }  
+    
+    mock_data = json.dumps({
+        "name" : "stuff",
+        "description" : "stuff", 
+        "season" : "spring", 
+        "image" : "pic"
+        })
+
+    res = client.post('/ingredients', data=mock_data, headers=mock_headers)
+    assert res.status_code ==201
+
+def test_api_get_ingredient(client):
+
+    res = client.get('/ingredients/1')
+    assert res.status_code ==200
+
+def test_api_patch_ingredent(client, jwt_token):
+     
+     mock_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {jwt_token}'
+        }  
+     
+     mock_data = json.dumps({
+        "name" : "new ingredient",
+        "description" : "stuff", 
+        "season" : "spring", 
+        "image" : "pic"
+        })
+     
+     res = client.patch('/ingredients/1', data=mock_data, headers=mock_headers)
+     parsed_data = json.loads(res.data)
+     assert parsed_data == {'data': {'id': 1, 'name': 'new ingredient', 'description': 'stuff', 'season': 'spring', 'image': 'pic'}}
+
+def test_api_delete_ingredient(client, jwt_token):
+
+    mock_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {jwt_token}'
+        }
+    
+    res = client.delete('/ingredients/1', headers=mock_headers)
+    assert res.status_code == 204
 
 
 
