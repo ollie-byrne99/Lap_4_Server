@@ -9,6 +9,8 @@ class Recipe(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     ingredients = db.Column(db.String(500), nullable=False)
+    vegetarian = db.Column(db.Boolean, default=False, nullable=False) 
+    vegan = db.Column(db.Boolean, default=False, nullable=False)
     instructions = db.Column(db.String(500), nullable=False)
     budget = db.Column(db.String(10), nullable = False)
     season = db.Column(db.String(10), nullable=False)
@@ -31,6 +33,8 @@ class Recipe(db.Model):
             "description": self.description,
             "ingredients": self.ingredients,
             "instructions": self.instructions,
+            "vegetarian": self.vegetarian,
+            "vegan": self.vegan,
             "budget": self.budget,
             "season": self.season,
             "image": self.image,
