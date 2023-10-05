@@ -295,8 +295,59 @@ entry20 = Recipe(
     user_id=predefined_user.id
 )
 
+entry21 = Recipe(
+    name="Creamy Truffle Risotto",
+    description="Indulgent risotto with a heavenly truffle aroma, perfect for a luxurious winter meal.",
+    ingredients="200g Arborio rice, 1L vegetable broth, 1 onion, 3 garlic cloves, 200ml white wine, 30ml truffle oil, 50g vegan parmesan, salt, pepper, parsley",
+    season="Winter",
+    instructions="1. Sauté onions, add garlic, and Arborio rice; stir.\n2. Add wine until evaporated.\n3. Add broth gradually, stirring.\n4. When almost cooked, add truffle oil, parmesan, salt, and pepper.\n5. Garnish with parsley and serve hot.",
+    vegetarian=True,
+    vegan=True,
+    budget="£££",
+    image="https://www.withspice.com/wp-content/uploads/2022/08/black-truffle-risotto.jpg", 
+    user_id=predefined_user.id
+)
 
-db.session.add_all([list1, entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9, entry10, entry11, entry12, entry13, entry14, entry15, entry16, entry17, entry18, entry19, entry20])
+entry22 = Recipe(
+    name="Mushroom and Thyme Risotto",
+    description="A rich and creamy risotto, bursting with the umami flavor of mushrooms and the aromatic touch of thyme.",
+    ingredients="200g Arborio rice, 500g mixed mushrooms (sliced), 1 onion (chopped), 2 garlic cloves (minced), 750ml vegetable broth, 100ml white wine, 50g grated parmesan, 2 tsp fresh thyme, salt, pepper, olive oil for cooking",
+    season="Autumn",
+    instructions="1. In a pan, sauté onion and garlic in olive oil.\n2. Add mushrooms, cook until tender.\n3. Stir in rice, cook for 2 mins.\n4. Add wine; simmer till reduced.\n5. Gradually add broth, stirring often, until rice is creamy.\n6. Mix in parmesan, thyme, season, and serve.",
+    vegetarian=True,
+    vegan=False, 
+    budget="££",
+    image="https://img.taste.com.au/nMU2wcNT/taste/2016/11/mixed-mushroom-and-thyme-risotto-97766-1.jpeg", 
+    user_id=predefined_user.id
+)
+
+entry23 = Recipe(
+    name="Summer Berry & Quinoa Salad",
+    description="A light and refreshing salad combining the sweetness of summer berries, crunchy nuts, and nutrient-rich quinoa, dressed in a zesty citrus vinaigrette.",
+    ingredients="150g quinoa, 200g mixed lettuce, 100g strawberries (sliced), 100g blueberries, 50g almonds (toasted & chopped), 3 tbsp olive oil, 2 tbsp orange juice, 1 tbsp lemon juice, 2 tbsp chopped fresh basil, salt, pepper",
+    season="Summer",
+    instructions="1. Cook quinoa as per package; cool.\n2. Whisk together olive oil, orange juice, lemon juice, salt, pepper, and basil for dressing.\n3. Mix quinoa, lettuce, strawberries, blueberries, and almonds in a bowl.\n4. Pour dressing over, toss well, and serve.",
+    vegetarian=True,
+    vegan=True,
+    budget="££",
+    image="https://simple-veganista.com/wp-content/uploads/2015/07/healthy-berry-spinach-quinoa-salad-6.jpg", 
+    user_id=predefined_user.id
+)
+
+entry24 = Recipe(
+    name="Spring Greens & Quinoa Salad",
+    description="A vibrant salad with crisp spring vegetables, protein-rich quinoa, and a tangy lemon dressing.",
+    ingredients="150g quinoa, 200g mixed spring greens (e.g., arugula, spinach), 100g cherry tomatoes, 50g radishes (sliced), 50g cucumber (sliced), 50g snap peas, 3 tbsp olive oil, 1 lemon (juiced), 2 tbsp chopped fresh mint, salt, pepper",
+    season="Spring",
+    instructions="1. Cook quinoa as per package; cool.\n2. In a bowl, mix olive oil, lemon juice, salt, pepper, and mint for dressing.\n3. Combine quinoa, greens, tomatoes, radishes, cucumber, and snap peas in a large bowl.\n4. Drizzle with dressing, toss, and serve chilled.",
+    vegetarian=True,
+    vegan=True,
+    budget="££",
+    image="https://www.forkknifeswoon.com/wp-content/uploads/2016/03/DSC5062-Fork_Knife_Swoon_Healthy_Mediterranean_Quinoa_Salad__Spring_Greens_Thumb.jpg", 
+    user_id=predefined_user.id
+)
+
+db.session.add_all([list1, entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9, entry10, entry11, entry12, entry13, entry14, entry15, entry16, entry17, entry18, entry19, entry20, entry21, entry22, entry23, entry24])
 db.session.commit() 
 
 
